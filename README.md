@@ -414,17 +414,17 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file
 
 - **Issues:** Open an issue on GitHub for bugs or questions
 - **Discussions:** Use GitHub Discussions for general questions
-- **Email:** vladyslav.hirchuk@example.com (replace with actual)
+- **Email:** hirchukv@gmail.com
 
 ### Community
 
 - **GitHub:** [@SoloScriptSage](https://github.com/SoloScriptSage)
-- **Project Website:** [View interactive demo →](https://soloscriptsage.github.io/xnav-ouster-adapter)
+- **Project Website:** [View interactive demo →](https://soloscriptsage.github.io/xnav-adapter.html)
 
 ### Commercial Support
 
 For custom designs, integration services, or bulk orders:
-- Contact: vladyslav.hirchuk@example.com
+- Contact: hirchukv@gmail.com
 - Available for consulting on similar GPS/LiDAR projects
 
 ---

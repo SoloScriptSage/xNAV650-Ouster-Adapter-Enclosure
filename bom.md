@@ -2,8 +2,8 @@
 ## xNAV650 to Ouster OS1 Adapter
 
 **Project:** Time Synchronization Adapter for Ouster OS1 LiDAR with xNAV650 INS  
-**Revision:** 1.0  
-**Date:** 2025-11-14  
+**Revision:** 1.1  
+**Date:** 2025-11-18  
 **Designer:** Vladyslav Hirchuk
 
 ---
@@ -23,31 +23,65 @@ This adapter enables time synchronization between the xNAV650 INS and Ouster OS1
 
 | Ref | Qty | Value/Part Number | Description | Package/Footprint | Notes |
 |-----|-----|-------------------|-------------|-------------------|-------|
-| J1 | 1 | Barrel Jack | DC Power Input, 12V | BarrelJack_Horizontal | 5.5mm x 2.1mm recommended |
-| U3 | 1 | OKI-78SR-3.3/1.5-W36-C | DC-DC Buck Converter, 12V→3.3V, 1.5A | OKI-78SR Vertical | Non-isolated switching regulator |
-| C1 | 1 | 100µF | Electrolytic Capacitor, 25V | Radial D6.3mm, P2.50mm | Input bulk capacitor |
-| C2 | 1 | 100µF | Electrolytic Capacitor, 16V | Radial D6.3mm, P2.50mm | Output filter capacitor |
-| C5 | 1 | 100µF | Electrolytic Capacitor, 16V | Radial D6.3mm, P2.50mm | Additional 3.3V filtering |
-| D1 | 1 | LED (Green) | Power Indicator LED, 5mm | LED_D5.0mm | Forward voltage ~2V, add series resistor if needed |
+| J1 | 1 | Jack-DC | DC Power Input, 12V | BarrelJack_Horizontal | 5.5mm x 2.1mm recommended |
+| U3 | 1 | OKI-78SR-3.3/1.5-W36-C | DC-DC Buck Converter, 12V→3.3V, 1.5A | Converter_DCDC_Murata_OKI-78SR_Vertical | Non-isolated switching regulator |
+| C5 | 1 | 22µF | Electrolytic Capacitor, 16V | Radial D6.3mm, P2.50mm | Input bulk capacitor |
+| C8 | 1 | 22µF | Electrolytic Capacitor, 16V | Radial D6.3mm, P2.50mm | Output filter capacitor |
+| D1 | 1 | LED (Green) | Power Indicator LED, 3mm | LED_D3.0mm | Forward voltage ~2V |
+| R1 | 1 | 220Ω | Current Limiting Resistor | Axial DIN0207, L6.3mm, P7.62mm | For LED current limiting |
 
 ### Signal Conversion Components
 
 | Ref | Qty | Value/Part Number | Description | Package/Footprint | Notes |
 |-----|-----|-------------------|-------------|-------------------|-------|
-| U2 | 1 | MAX3232 | Dual RS232 Transceiver | DIP-16, 7.62mm pitch | Converts RS232 ↔ TTL logic levels |
-| C3 | 1 | 100µF | Electrolytic Capacitor, 16V | Radial D6.3mm, P2.50mm | Charge pump capacitor for MAX3232 |
-| C4 | 1 | 100µF | Electrolytic Capacitor, 16V | Radial D6.3mm, P2.50mm | Charge pump capacitor for MAX3232 |
-| U4 | 1 | 74HC125N | Quad 3-State Buffer | DIP-14, 7.62mm pitch | Buffers PPS signal to 5V TTL |
-| R1 | 1 | 100Ω | Current Limiting Resistor | Axial, 1/4W, L6.3mm | For LED current limiting |
-| R2 | 1 | 100Ω | Current Limiting Resistor | Axial, 1/4W, L6.3mm | Signal termination/protection |
+| U2 | 1 | MAX3232E | Dual RS232 Transceiver (3.3V Version) | DIP-16, 7.62mm pitch | Converts RS232 ↔ TTL logic levels |
+| C1 | 1 | 100nF | Ceramic Capacitor, 50V | SMD 0805 (2012 Metric) | Charge pump capacitor for MAX3232 |
+| C2 | 1 | 100nF | Ceramic Capacitor, 50V | SMD 0805 (2012 Metric) | Charge pump capacitor for MAX3232 |
+| C3 | 1 | 100nF | Ceramic Capacitor, 50V | SMD 0805 (2012 Metric) | Charge pump capacitor for MAX3232 |
+| C4 | 1 | 100nF | Ceramic Capacitor, 50V | SMD 0805 (2012 Metric) | Charge pump capacitor for MAX3232 |
+| C7 | 1 | 100nF | Ceramic Disc Capacitor | THT Disc D3.0mm, P2.50mm | Decoupling capacitor |
+| U4 | 1 | 74HC125N | Quad 3-State Buffer | DIP-14, 7.62mm pitch (DIP254P762X420-14) | Buffers PPS signal to 5V TTL |
 
 ### Connectors
 
 | Ref | Qty | Value/Part Number | Description | Package/Footprint | Notes |
 |-----|-----|-------------------|-------------|-------------------|-------|
-| J2 | 1 | 15-pin Micro-D Female | Main xNAV650 Interface | DSUB-15 Horizontal, P2.77x2.84mm | Mates with xNAV650 user cable |
-| J4 | 1 | RJ45 LED Shielded | Ethernet + Ouster Interface | Amphenol 54602-x08 Horizontal | Combined Ethernet + power + signals |
+| J2 | 1 | 15-pin Micro-D Female | Main xNAV650 Interface | DSUB-15 Horizontal, P2.77x2.84mm, EdgePinOffset7.70mm | Mates with xNAV650 user cable |
+| J4 | 1 | RJ45_LED_Shielded | Ethernet + Ouster Interface | Amphenol 54602-x08 Horizontal | Combined Ethernet + power + signals |
 | U1 | 1 | Ouster OS1 | LiDAR Unit (not on PCB) | — | External device, for reference only |
+
+---
+
+## Key Changes from Revision 1.0
+
+### Capacitor Updates
+- **C1, C2, C3, C4:** Changed from 100µF electrolytic to **100nF ceramic SMD 0805**
+  - Smaller footprint, better high-frequency performance
+  - Suitable for MAX3232E charge pump operation
+  - Lower profile for compact PCB design
+
+- **C5, C8:** Changed from 100µF to **22µF electrolytic**
+  - Still provides adequate filtering for DC-DC converter
+  - Smaller physical size (D6.3mm)
+  - More cost-effective
+
+- **C7:** New component - **100nF ceramic disc capacitor (THT)**
+  - Additional decoupling for digital logic
+  - Through-hole for easy assembly/replacement
+
+### Component Updates
+- **U2:** Specified as **MAX3232E** (3.3V version) instead of generic MAX3232
+  - Explicitly designed for 3.3V operation
+  - Lower power consumption
+  - Better suited for the 3.3V system voltage
+
+- **R1:** Increased from **100Ω to 220Ω**
+  - Better current limiting for LED (≈10mA @ 3.3V)
+  - Extends LED lifespan
+
+- **D1:** Changed to **3mm LED** from 5mm
+  - Smaller footprint
+  - Adequate brightness for indicator
 
 ---
 
@@ -70,15 +104,16 @@ This adapter enables time synchronization between the xNAV650 INS and Ouster OS1
 
 ### Power Supply Requirements
 - **Input:** 12V DC ±10% (10.8V - 13.2V acceptable)
-- **Current Draw:** ~200-300mA typical (mostly from U3 regulator)
+- **Current Draw:** ~150-250mA typical (reduced from v1.0 due to smaller capacitors)
 - **Output:** 3.3V @ 1.5A max (OKI-78SR capability)
 
 ### Critical Design Notes
 
-1. **MAX3232 (U2)**
-   - Operating voltage: 3.0V - 5.5V (running at 3.3V)
+1. **MAX3232E (U2)**
+   - Operating voltage: 3.0V - 5.5V (optimized for 3.3V operation)
    - Converts xNAV650 RS232 NMEA output to TTL 5V for OS1
-   - Requires external capacitors (C3, C4) for charge pump operation
+   - Requires four external 100nF capacitors (C1-C4) for charge pump operation
+   - Lower power consumption than standard MAX3232
    - ESD sensitive - handle with care
 
 2. **74HC125N (U4)**
@@ -90,13 +125,14 @@ This adapter enables time synchronization between the xNAV650 INS and Ouster OS1
 3. **OKI-78SR-3.3 (U3)**
    - Efficient switching regulator (typically 85-90% efficiency)
    - Built-in overload and thermal protection
-   - No external components required except input/output capacitors
+   - Minimal external components required (C5, C8 for filtering)
    - Compatible with wide input range (6.5V - 36V)
 
 4. **Capacitors**
-   - All 100µF electrolytic capacitors
-   - Minimum voltage rating: 16V (except C1 should be 25V)
-   - Ensure proper polarity during assembly
+   - C1-C4: 100nF ceramic SMD 0805 (X7R or X5R dielectric recommended)
+   - C5, C8: 22µF electrolytic, minimum 16V rating
+   - C7: 100nF ceramic disc, through-hole
+   - Ensure proper polarity on electrolytic capacitors during assembly
 
 ### Signal Connections
 
@@ -118,21 +154,30 @@ This adapter enables time synchronization between the xNAV650 INS and Ouster OS1
 
 1. **Component Orientation:**
    - Pay attention to IC pin 1 indicators
-   - Electrolytic capacitors have polarity markings
-   - LED has polarity (longer lead = anode/+)
+   - Electrolytic capacitors (C5, C8) have polarity markings
+   - LED (D1) has polarity (longer lead = anode/+)
+   - SMD capacitors (C1-C4) are non-polarized
 
 2. **Soldering Order:**
-   - Start with lowest profile components (resistors)
-   - Then ICs (or sockets if using)
-   - Capacitors next
-   - Connectors last
+   - **SMD components first** (C1-C4) - requires reflow or hot air station
+   - Then low-profile THT components (resistors, C7)
+   - ICs next (or sockets if using)
+   - Electrolytic capacitors (C5, C8)
+   - Connectors and taller components last
+   - LED and barrel jack final
 
-3. **Testing Before Connection:**
-   - Verify 12V input polarity
-   - Measure 3.3V output from U3 before connecting ICs
+3. **SMD Soldering Tips:**
+   - Use solder paste and hot air station, or hand solder with fine tip
+   - 0805 components are beginner-friendly for hand soldering
+   - Apply flux for easier soldering
+
+4. **Testing Before Connection:**
+   - Verify 12V input polarity at J1
+   - Measure 3.3V output from U3 before installing ICs
    - Check continuity on ethernet pass-through
+   - Test LED operation
 
-4. **Strain Relief:**
+5. **Strain Relief:**
    - Use cable ties or clamps for all external cables
    - Ensure no mechanical stress on PCB connectors
 
@@ -142,30 +187,53 @@ This adapter enables time synchronization between the xNAV650 INS and Ouster OS1
 
 ### Mouser/Digikey Part Numbers:
 
-| Component | Manufacturer Part # | Supplier Part # |
-|-----------|-------------------|-----------------|
-| MAX3232CPE | MAX3232CPE+ | Mouser: 700-MAX3232CPE |
-| 74HC125N | 74HC125N | Mouser: 771-74HC125N |
-| OKI-78SR-3.3/1.5-W36-C | OKI-78SR-3.3/1.5-W36-C | Mouser: 811-OKI-78SR-3.3/1.5W36C |
-| Micro-D 15-pin | Varies by manufacturer | Amphenol, Norcomp, etc. |
-| RJ45 Shielded | Amphenol 54602-x08 | Check specific variant needed |
+| Component | Manufacturer Part # | Supplier Part # | Notes |
+|-----------|-------------------|-----------------|-------|
+| MAX3232E | MAX3232ECPE+ | Mouser: 700-MAX3232ECPE+ | DIP-16 package |
+| 74HC125N | 74HC125N | Mouser: 771-74HC125N | DIP-14 package |
+| OKI-78SR-3.3/1.5-W36-C | OKI-78SR-3.3/1.5-W36-C | Mouser: 811-OKI-78SR-3.3/1.5W36C | Vertical mount |
+| 100nF SMD 0805 | Various (X7R/X5R) | Search: "0805 100nF X7R" | Buy 10+ for spares |
+| 22µF Electrolytic | Panasonic/Nichicon | Radial, 16V min | Standard grade OK |
+| 220Ω Resistor | Various | 1/4W, 5% tolerance | Metal film preferred |
+| LED 3mm | Various colors | Green recommended | Diffused lens |
+| Micro-D 15-pin | Varies by manufacturer | Amphenol, Norcomp, etc. | Right-angle mount |
+| RJ45 Shielded | Amphenol 54602-x08 | Check specific variant | LED integrated |
 
 ---
 
 ## Cost Estimate (Approximate, USD)
 
-| Category | Estimated Cost |
-|----------|---------------|
-| ICs (U2, U3, U4) | $15 - $25 |
-| Capacitors (5×) | $3 - $5 |
-| Resistors (2×) | $0.50 - $1 |
-| Connectors (J1, J2, J4) | $10 - $20 |
-| PCB (prototype, single unit) | $20 - $50 |
-| Enclosure + hardware | $10 - $30 |
-| Cables & misc | $15 - $30 |
-| **Total per unit** | **$75 - $160** |
+| Category | Estimated Cost | Notes |
+|----------|---------------|-------|
+| ICs (U2, U3, U4) | $15 - $25 | Similar to v1.0 |
+| SMD Capacitors (4× 100nF) | $1 - $3 | Much cheaper than electrolytics |
+| THT Capacitors (C5, C7, C8) | $1 - $2 | Reduced from v1.0 |
+| Resistor & LED | $0.50 - $1 | Unchanged |
+| Connectors (J1, J2, J4) | $10 - $20 | Unchanged |
+| PCB (prototype, single unit) | $20 - $50 | Unchanged |
+| Enclosure + hardware | $10 - $30 | Unchanged |
+| Cables & misc | $15 - $30 | Unchanged |
+| **Total per unit** | **$70 - $155** | Slightly lower due to cheaper caps |
 
-*Bulk pricing will significantly reduce per-unit costs.*
+*Bulk pricing will significantly reduce per-unit costs. SMD components offer better pricing at volume.*
+
+---
+
+## PCB Design Considerations
+
+### Component Placement (From Your Schematic)
+- **Area:** Approximately 228mm × 141mm board
+- **Power section:** Left side (J1, U3, C5, C8, R1, D1)
+- **Serial interface:** Center (U2, C1-C4)
+- **Digital buffer:** Center-right (U4, C7)
+- **Connectors:** J2 on left edge, J4 on right edge
+
+### Design Tips
+1. Keep SMD capacitors (C1-C4) close to MAX3232E pins
+2. Short traces from U3 to C5 and C8 for stable power
+3. Separate analog (RS232) and digital (buffer) ground planes if possible
+4. Add mounting holes near corners for M3 standoffs
+5. Consider copper pour for GND to reduce EMI
 
 ---
 
@@ -174,6 +242,7 @@ This adapter enables time synchronization between the xNAV650 INS and Ouster OS1
 | Rev | Date | Changes | Author |
 |-----|------|---------|--------|
 | 1.0 | 2025-11-14 | Initial release | Vladyslav Hirchuk |
+| 1.1 | 2025-11-18 | Updated capacitor values and packages; specified MAX3232E; adjusted resistor value; added C7 | Vladyslav Hirchuk |
 
 ---
 
@@ -181,7 +250,8 @@ This adapter enables time synchronization between the xNAV650 INS and Ouster OS1
 
 - [xNAV650 Hardware Manual](https://www.datrontechnology.co.uk/wp-content/uploads/2021/03/xNAV650-manual-210311.pdf)
 - [Ouster OS1 Documentation](https://ouster.com/downloads)
-- [MAX3232 Datasheet](https://www.ti.com/product/MAX3232)
+- [MAX3232E Datasheet](https://www.ti.com/product/MAX3232E)
+- [74HC125 Datasheet](https://www.ti.com/product/SN74HC125)
 - [OKI-78SR Datasheet](https://www.murata.com/products/productdata/8807031734302/oki-78sr.pdf)
 
 ---
